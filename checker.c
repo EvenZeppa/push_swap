@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include <limits.h>
+#include "libft.h"
 #include "get_next_line.h"
 
 typedef struct	s_stack
@@ -109,6 +110,26 @@ void	init_lstack(t_stack **lstack, char **nbrs, int size_nbrs)
 		add_back_lstack(lstack, new);
 		i++;
 	}
+}
+
+int	has_lstack_duplicate_nb(t_stack *lstack)
+{
+	t_stack	*current;
+	t_stack	*duplicate_stack;
+
+	current = lstack;
+	while (current)
+	{
+		duplicate_stack = current->next;
+		while (duplicate_stack)
+		{
+			if (current->nb == duplicate_stack->nb)
+				return (1);
+			duplicate_stack = duplicate_stack->next;
+		}
+		current = current->next;
+	}
+	return (0);
 }
 
 void	print_lstacks(t_stack *lstack_a, t_stack *lstack_b)
@@ -268,6 +289,7 @@ int	do_instructions(t_stack **lstack_a, t_stack **lstack_b, char *buffer)
 		return (lstack_rrotate(lstack_b), 1);
 	if (!ft_strncmp(buffer, "rrr\n", 4))
 		return (lstack_rrotate(lstack_a), lstack_rrotate(lstack_b), 1);
+	return (-1);
 }
 
 int	handle_stdin(t_stack **lstack_a, t_stack **lstack_b)
@@ -280,16 +302,51 @@ int	handle_stdin(t_stack **lstack_a, t_stack **lstack_b)
 		buffer = get_next_line(STDIN_FILENO);
 		check = check_buffer(buffer);
 		if (check == -1)
-			return (printf("Error") -1);
+			return (ft_printf("Error\n") -1);
 		if (!check)
 		{
 			if (!get_size_lstack(*lstack_b) && is_lstack_sorted(*lstack_a))
-				return (printf("OK"), 1);
-			return (printf("KO"), 1);
+				return (ft_printf("OK"), 1);
+			return (ft_printf("KO"), 1);
 		}
 		do_instructions(lstack_a, lstack_b, buffer);
 		print_lstacks(*lstack_a, *lstack_b);
 	}
+}
+
+int	ft_is_int(char *str)
+{
+	long long	result;
+	int			sign;
+
+	sign = 1;
+	result = 0;
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '-')
+			sign = -1;
+		str++;
+	}
+	while (*str)
+	{
+		if (!ft_isdigit(*str))
+			return (0);
+		result = result * 10 + (*str + '0');
+		if (result * sign < INT_MIN || result * sign > INT_MAX)
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
+int	check_args(int nb, char *args[])
+{
+	while (--nb >= 0)
+	{
+		if (!ft_is_int(args[nb]))
+			return (0);
+	}
+	return (1);
 }
 
 int	main(int argc, char *argv[])
@@ -299,7 +356,13 @@ int	main(int argc, char *argv[])
 
 	lstack_a = NULL;
 	lstack_b = NULL;
+	if (argc == 1)
+		return (0);
+	if (!check_args(argc - 1, &argv[1]))
+		return (ft_printf("Error\n") -1);
 	init_lstack(&lstack_a, &argv[1], argc - 1);
+	if (has_lstack_duplicate_nb(lstack_a))
+		return (ft_printf("Error\n") -1);
 	print_lstacks(lstack_a, lstack_b);
 	handle_stdin(&lstack_a, &lstack_b);
 
