@@ -52,3 +52,15 @@ void	flood_stack(t_stack *stack, int *data, int size)
 		i++;
 	}
 }
+
+void	print_stack(t_stack *stack)
+{
+	int	i;
+
+	i = stack->top;
+	while (i >= 0)
+	{
+		ft_printf("%d\n", stack->data[i]);
+		i--;
+	}
+}

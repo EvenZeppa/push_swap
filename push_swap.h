@@ -2,6 +2,7 @@
 # define PUSH_SWAP_H
 
 # include <stdlib.h>
+# include <limits.h>
 # include "libft.h"
 
 // Structure for a stack
@@ -25,6 +26,7 @@ typedef struct	s_push_swap
 {
 	t_stack			*a;
 	t_stack			*b;
+	int				*sorted;
 	t_operations	ops;
 }	t_push_swap;
 
@@ -37,11 +39,14 @@ void	free_stack(t_stack *stack);
 void	push(t_stack *stack, int nb);
 int		pop(t_stack *stack);
 void	flood_stack(t_stack *stack, int *data, int size);
+void	print_stack(t_stack *stack);
 
 // Operations functions
 void	init_operations(t_operations *ops);
 void	add_operation(t_operations *ops, char *op);
+void	pop_operation(t_operations *ops);
 void	free_operations(t_operations *ops);
+void	print_operations(t_operations *ops);
 
 // Stack operations
 void	sa(t_push_swap *ps);
