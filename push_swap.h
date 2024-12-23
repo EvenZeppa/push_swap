@@ -27,6 +27,7 @@ typedef struct	s_push_swap
 	t_stack			*a;
 	t_stack			*b;
 	int				*sorted;
+	int				*cmp;
 	t_operations	ops;
 }	t_push_swap;
 
