@@ -214,21 +214,59 @@ int	get_best_score(t_push_swap *ps)
 	int		scores[11] = {0};
 	int		score_max_i = -1;
 	char	*last = ft_strdup("");
+	char	*prev_last = ft_strdup("");
+	
+	scores[SA] = (ps->a->top > 1 && (ps->a->data[ps->a->top] > ps->a->data[ps->a->top - 1])) ? 1 : 0;
+	scores[SB] = (ps->b->top > 1 && (ps->b->data[ps->b->top] < ps->b->data[ps->b->top - 1]) ? 1 : 0);
+	scores[SS] = scores[SA] + scores[SB] - 1;
+	scores[PA] = 0;
+	scores[PB] = 0;
+	scores[RA] = (ps->a->top > 1 && cmp[ps->a->top] < 0 && (cmp[ps->a->top] + (ps->a->top + 1)) <= ((ps->a->top + 1) / 2) ? 3 : 0);
+	scores[RB] = (ps->b->top > 1 && cmp[ps->a->top + 1] > 0 && ((ps->b->top + 1) - cmp[ps->a->top + 1]) <= ((ps->b->top + 1) / 2) ? 3 : 0);
+	scores[RR] = scores[RA] + scores[RB] - 1;
+	scores[RRA] = (ps->a->top > 1 && cmp[0] > 0 && ((ps->a->top + 1) - cmp[0]) < ((ps->a->top + 1) / 2) ? 3 : 0);
+	scores[RRB] = (ps->b->top > 1 && cmp[ps->a->top + ps->b->top + 1] < 0 && ((ps->b->top + 1) + cmp[ps->a->top + ps->b->top + 1]) <= ((ps->b->top + 1) / 2) ? 3 : 0);
+	scores[RRR] = scores[RRA] + scores[RRB];
 
 	if (ps->ops.count > 0)
 		last = ps->ops.ops[ps->ops.count - 1];
-	
-	scores[SA] = (ft_strcmp(last, "sa") && ps->a->top > 1 && ps->a->data[ps->a->top] > ps->a->data[ps->a->top - 1] ? 1 : 0);
-	scores[SB] = (ft_strcmp(last, "sb") && ps->b->top > 1 && ps->b->data[ps->b->top] < ps->b->data[ps->b->top - 1] ? 1 : 0);
-	scores[SS] = (ft_strcmp(last, "ss") ? scores[SA] + scores[SB] : 0);
-	scores[PA] = 0;
-	scores[PB] = 0;
-	scores[RA] = (ft_strcmp(last, "ra") && ps->a->top > 1 && cmp[ps->a->top] < 0 && (cmp[ps->a->top] + (ps->a->top + 1)) <= ((ps->a->top + 1) / 2) ? 3 : 0);
-	scores[RB] = (ft_strcmp(last, "rrb") && ps->b->top > 1 && cmp[ps->a->top + 1] > 0 && ((ps->b->top + 1) - cmp[ps->a->top + 1]) <= ((ps->b->top + 1) / 2) ? 3 : 0);
-	scores[RR] = (ft_strcmp(last, "rr") ? scores[RA] + scores[RB] - 1 : 0);
-	scores[RRA] = (ft_strcmp(last, "rra") && ps->a->top > 1 && cmp[0] > 0 && ((ps->a->top + 1) - cmp[0]) < ((ps->a->top + 1) / 2) ? 3 : 0);
-	scores[RRB] = (ft_strcmp(last, "rb") && ps->b->top > 1 && cmp[ps->a->top + ps->b->top + 1] < 0 && ((ps->b->top + 1) + cmp[ps->a->top + ps->b->top + 1]) <= ((ps->b->top + 1) / 2) ? 3 : 0);
-	scores[RRR] = (ft_strcmp(last, "rrr") ? scores[RRA] + scores[RRB] - 1 : 0);
+	if (ps->ops.count > 1)
+		prev_last = ps->ops.ops[ps->ops.count - 2];
+
+	if (ft_strcmp(last, "sa") == 0)
+		scores[SA] = 0;
+	if (ft_strcmp(last, "sb") == 0)
+		scores[SB] = 0;
+	if (ft_strcmp(last, "ss") == 0 || ft_strcmp(last, "sa") == 0 || ft_strcmp(last, "sb") == 0)
+		scores[SS] = 0;
+	if (ft_strcmp(last, "pa") == 0)
+		scores[PA] = 0;
+	if (ft_strcmp(last, "pb") == 0)
+		scores[PB] = 0;
+	if (ft_strcmp(last, "ra") == 0 || ft_strcmp(last, "rra") == 0
+		|| ft_strcmp(prev_last, "ra") == 0 || ft_strcmp(prev_last, "rra") == 0)
+		scores[RA] = 0;
+	if (ft_strcmp(last, "rb") == 0 || ft_strcmp(last, "rrb") == 0
+		|| ft_strcmp(prev_last, "rb") == 0 || ft_strcmp(prev_last, "rrb") == 0)
+		scores[RB] = 0;
+	if (ft_strcmp(last, "rr") == 0 || ft_strcmp(last, "ra") == 0 || ft_strcmp(last, "rb") == 0
+		|| ft_strcmp(prev_last, "ra") == 0 || ft_strcmp(prev_last, "rb") == 0)
+		scores[RR] = 0;
+	if (ft_strcmp(last, "ra") == 0 || ft_strcmp(last, "rra") == 0
+		|| ft_strcmp(prev_last, "ra") == 0 || ft_strcmp(prev_last, "rra") == 0)
+		scores[RRA] = 0;
+	if (ft_strcmp(last, "rb") == 0 || ft_strcmp(last, "rrb") == 0
+		|| ft_strcmp(prev_last, "rb") == 0 || ft_strcmp(prev_last, "rrb") == 0)
+		scores[RRB] = 0;
+	if (ft_strcmp(last, "rrr") == 0 || ft_strcmp(last, "rra") == 0 || ft_strcmp(last, "rrb") == 0
+		|| ft_strcmp(prev_last, "rra") == 0 || ft_strcmp(prev_last, "rrb") == 0)
+		scores[RRR] = 0;
+
+	// if (cmp[ps->a->top] == -1)
+	// {
+	// 	ft_printf("Scores: SA=%d SB=%d SS=%d PA=%d PB=%d RA=%d RB=%d RR=%d RRA=%d RRB=%d RRR=%d\n", scores[SA], scores[SB], scores[SS], scores[PA], scores[PB], scores[RA], scores[RB], scores[RR], scores[RRA], scores[RRB], scores[RRR]);
+	// 	print_ps(ps);
+	// }
 
 	for (int i = 0; i < 11; i++)
 	{
@@ -241,9 +279,11 @@ int	get_best_score(t_push_swap *ps)
 
 void	sort(t_push_swap *ps)
 {
+	qsort_ps(ps);
+
 	int		best_score;
 
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < 2000; i++)
 	{
 		// print_int_tab(ps->cmp, ps->a->size);
 		// print_ps(ps);
@@ -295,7 +335,6 @@ void	sort(t_push_swap *ps)
 		update_cmp(ps);
 	}
 	
-	// qsort_ps(ps);
 }
 
 // void	sort(t_push_swap *ps)
@@ -354,11 +393,11 @@ int	main()
 	// ft_printf("Indexes movements: ");
 
 	print_ps(&ps);
-	print_operations(&ps.ops);
+	// print_operations(&ps.ops);
 	// print_operation_recurence(&ps.ops);
 	// print_int_tab(ps.sorted, size);
 	// print_int_tab(ps.sorted, ps.a->size);
-	// print_int_tab(ps.cmp, ps.a->size);
+	print_int_tab(ps.cmp, ps.a->size);
 
 	free_operations(&ps.ops);
 	free_stack(ps.a);
