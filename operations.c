@@ -14,7 +14,7 @@ void	add_operation(t_operations *ops, char *op)
 	if (ops->count == ops->capacity)
 	{
 		ops->capacity *= 2;
-		ops->ops = ft_realloc(ops->ops, sizeof(char *) * ops->capacity);
+		ops->ops = realloc(ops->ops, sizeof(char *) * ops->capacity);
 	}
 	ops->ops[ops->count] = ft_strdup(op);
 	ops->count++;
