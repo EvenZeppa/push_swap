@@ -47,6 +47,8 @@ void	add_operation(t_operations *ops, char *op);
 void	pop_operation(t_operations *ops);
 void	free_operations(t_operations *ops);
 void	print_operations(t_operations *ops);
+void	print_operation_recurence(t_operations *ops);
+
 
 // Stack operations
 void	sa(t_push_swap *ps);
