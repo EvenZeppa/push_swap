@@ -183,7 +183,7 @@ int	check_buffer(char *buffer)
 		|| !ft_strncmp(buffer, "rb\n", 3)
 		|| !ft_strncmp(buffer, "rr\n", 3)
 		|| !ft_strncmp(buffer, "rra\n", 4)
-		|| !ft_strncmp(buffer, "rra\n", 4)
+		|| !ft_strncmp(buffer, "rrb\n", 4)
 		|| !ft_strncmp(buffer, "rrr\n", 4))
 		return (1);
 	return (-1);
@@ -226,8 +226,11 @@ void	lstack_push(t_stack **lstack_r, t_stack **lstack_g)
 	tmp = (*lstack_g)->next;
 	if (tmp)
 		tmp->prev = NULL;
-	if (lstack_r)
+	if (*lstack_r)
+	{
 		(*lstack_g)->next = *lstack_r;
+		(*lstack_r)->prev = (*lstack_g);
+	}
 	else
 		(*lstack_g)->next = NULL;
 	(*lstack_g)->prev = NULL;

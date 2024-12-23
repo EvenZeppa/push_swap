@@ -74,23 +74,55 @@ int	get_min_num_pos(int *tab, int size)
 	return ((size - 1) - pos);
 }
 
+int	get_distance_of_2_num(int nb1, int nb2)
+{
+	return ((nb1 - nb2) < 0 ? (nb1 - nb2) * -1 : nb1 - nb2);
+}
+
+void	max_nb_sort(t_push_swap *ps)
+{
+	int	current;
+
+	current = ps->a->data[ps->a->top];
+	while (current != 500)
+	{
+		if (ps->b->top <= 0 && current > 100)
+			ra(ps);
+		else if (current > ps->b->data[ps->b->top] && get_distance_of_2_num(current, ps->b->data[ps->b->top]) < 100)
+			pb(ps);
+		else if (current > ps->b->data[0] && get_distance_of_2_num(current, ps->b->data[0]) < 100)
+		{
+			pb(ps);
+			rb(ps);
+		}
+		else
+			ra(ps);
+		current = ps->a->data[ps->a->top];
+	}
+}
+
 void	sort(t_push_swap *ps)
 {
-	int	min_pos;
-
-	while (ps->a->top > 0)
-	{
-		min_pos = get_min_num_pos(ps->a->data, &ps->a->data[ps->a->top] - &ps->a->data[0] + 1);
-		while (min_pos > 0)
-		{
-			ra(ps);
-			min_pos--;
-		}
-		pb(ps);
-	}
-	while (ps->b->top >= 0)
-		pa(ps);
+	max_nb_sort(ps);
 }
+
+// void	sort(t_push_swap *ps)
+// {
+// 	int	min_pos;
+
+// 	while (ps->a->top > 0)
+// 	{
+// 		min_pos = get_min_num_pos(ps->a->data, &ps->a->data[ps->a->top] - &ps->a->data[0] + 1);
+// 		while (min_pos > 0)
+// 		{
+// 			ra(ps);
+// 			min_pos--;
+// 		}
+// 		pb(ps);
+// 	}
+// 	while (ps->b->top >= 0)
+// 		pa(ps);
+// }
 
 int	main()
 {
@@ -99,11 +131,11 @@ int	main()
 	int	size = sizeof(unsorted_data) / sizeof(unsorted_data[0]);
 
 
-	int	data[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+	// int	data[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 	// int	size = sizeof(data) / sizeof(data[0]);
 
 	rev_int_tab(unsorted_data, size);
-	rev_int_tab(data, size);
+	// rev_int_tab(data, size);
 
 	t_push_swap	ps;
 	ps.a = create_stack(size);
@@ -118,6 +150,7 @@ int	main()
 	flood_stack(ps.a, unsorted_data, size);
 	// flood_stack(ps.a, data, size);
 
+	// print_ps(&ps);
 	sort(&ps);
 	// print_ps(&ps);
 
@@ -126,7 +159,7 @@ int	main()
 	// ft_printf("Indexes movements: ");
 	int	*cmp_tab = cmp_int_tab(ps.a->data, ps.sorted, size);
 	// print_int_tab(cmp_tab, size);
-	print_operation_recurence(&ps.ops);
+	// print_operation_recurence(&ps.ops);
 
 	// pb(&ps);
 	// pb(&ps);
@@ -135,13 +168,14 @@ int	main()
 	// sa(&ps);
 	// ss(&ps);
 
-	// print_ps(&ps);
+	print_ps(&ps);
 	// print_operations(&ps.ops);
 	// print_int_tab(ps.sorted, size);
 
 	free(cmp_tab);
 	free_operations(&ps.ops);
 	free_stack(ps.a);
+	free_stack(ps.b);
 
 	return (0);
 }
