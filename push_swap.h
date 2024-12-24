@@ -18,6 +18,12 @@ typedef enum e_metrics
 	ME_OP_COUNT
 }	t_metrics;
 
+typedef enum e_to_stack
+{
+	TO_A,
+	TO_B
+}	t_to_stack;
+
 // Structure for a stack
 typedef struct	s_stack
 {
@@ -86,8 +92,15 @@ void	rev_int_tab(int *tab, int size);
 int		*cmp_int_tab(int *tab1, int *tab2, int size);
 void	ft_qsort_int(int **tab, int size);
 void	print_int_tab(int *tab, int size);
+int		is_int_tab_zero(int *tab, int size);
 
 // Metrics functions
 void	breakpoint(t_push_swap *ps, ...);
+
+// Solver functions
+// void	qsort_ps_sup(t_push_swap *ps, t_to_stack to_stack, int pivot, int in_stack_size);
+// void	qsort_ps_inf(t_push_swap *ps, t_to_stack to_stack, int pivot, int in_stack_size);	
+void	qsort_ps_a(t_push_swap *ps, int pivot);
+void	qsort_ps_b(t_push_swap *ps, int pivot);
 
 #endif

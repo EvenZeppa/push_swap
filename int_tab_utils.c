@@ -80,3 +80,17 @@ void	print_int_tab(int *tab, int size)
 	}
 	ft_printf("\n");
 }
+
+int	is_int_tab_zero(int *tab, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		if (tab[i] != 0)
+			return (0);
+		i++;
+	}
+	return (1);
+}

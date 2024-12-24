@@ -1,7 +1,8 @@
 CC = gcc
-C_FLAGS = -Wall -Wextra -Werror
+# C_FLAGS = -Wall -Wextra -Werror
+C_FLAGS = 
 INCLUDES = -Iinclude
-PUSH_SWAP_SRCS = main.c push_swap.c stack.c stack_operations.c operations.c int_tab_utils.c metrics.c
+PUSH_SWAP_SRCS = main.c push_swap.c stack.c stack_operations.c operations.c int_tab_utils.c metrics.c solve.c
 PUSH_SWAP_TARGET = push_swap
 CHECKER_SRCS = checker/checker.c checker/get_next_line.c checker/get_next_line_utils.c
 CHECKER_TARGET = checker1
