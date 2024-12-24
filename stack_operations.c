@@ -1,5 +1,6 @@
 #include "push_swap.h"
 
+// Swaps the top two elements of stack A
 void	sa(t_push_swap *ps)
 {
 	int	tmp;
@@ -13,6 +14,7 @@ void	sa(t_push_swap *ps)
 	}
 }
 
+// Swaps the top two elements of stack B
 void	sb(t_push_swap *ps)
 {
 	int	tmp;
@@ -26,6 +28,7 @@ void	sb(t_push_swap *ps)
 	}
 }
 
+// Swaps the top two elements of both stacks A and B
 void	ss(t_push_swap *ps)
 {
 	sa(ps);
@@ -35,6 +38,7 @@ void	ss(t_push_swap *ps)
 	add_operation(&ps->ops, "ss");
 }
 
+// Pushes the top element of stack B onto stack A
 void	pa(t_push_swap *ps)
 {
 	if (ps->b->top >= 0)
@@ -44,6 +48,7 @@ void	pa(t_push_swap *ps)
 	}
 }
 
+// Pushes the top element of stack A onto stack B
 void	pb(t_push_swap *ps)
 {
 	if (ps->a->top >= 0)
@@ -53,6 +58,7 @@ void	pb(t_push_swap *ps)
 	}
 }
 
+// Rotates stack A upwards
 void	ra(t_push_swap *ps)
 {
 	int	tmp;
@@ -72,6 +78,7 @@ void	ra(t_push_swap *ps)
 	}
 }
 
+// Rotates stack B upwards
 void	rb(t_push_swap *ps)
 {
 	int	tmp;
@@ -91,6 +98,7 @@ void	rb(t_push_swap *ps)
 	}
 }
 
+// Rotates both stacks A and B upwards
 void	rr(t_push_swap *ps)
 {
 	ra(ps);
@@ -100,6 +108,7 @@ void	rr(t_push_swap *ps)
 	add_operation(&ps->ops, "rr");
 }
 
+// Rotates stack A downwards
 void	rra(t_push_swap *ps)
 {
 	int	tmp;
@@ -119,6 +128,7 @@ void	rra(t_push_swap *ps)
 	}
 }
 
+// Rotates stack B downwards
 void	rrb(t_push_swap *ps)
 {
 	int	tmp;
@@ -138,6 +148,7 @@ void	rrb(t_push_swap *ps)
 	}
 }
 
+// Rotates both stacks A and B downwards
 void	rrr(t_push_swap *ps)
 {
 	rra(ps);

@@ -87,6 +87,14 @@ void	print_operation_recurence(t_operations *ops)
 	int		recurence_index;
 	int		i;
 
+
+	ft_printf(
+		"--------------------------------------\n"
+		"|        Operation Recurences        |\n"
+		"--------------------------------------\n"
+	);
+	if (ops->count == 0)
+		return ;
 	recurences = malloc(sizeof(char *) * 512);
 	if (!recurences)
 		return ;
@@ -109,12 +117,6 @@ void	print_operation_recurence(t_operations *ops)
 		}
 		nb_recurences[recurence_index]++;
 	}
-
-	ft_printf(
-		"--------------------------------------\n"
-		"|        Operation Recurences        |\n"
-		"--------------------------------------\n"
-	);
 	i = 0;
 	while (recurences[i])
 	{

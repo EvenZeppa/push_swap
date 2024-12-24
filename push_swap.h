@@ -2,8 +2,21 @@
 # define PUSH_SWAP_H
 
 # include <stdlib.h>
+# include <stdio.h>
 # include <limits.h>
+# include <stdarg.h>
 # include "libft.h"
+
+typedef enum e_metrics
+{
+	ME_END,
+	ME_PS,
+	ME_SORTED,
+	ME_CMP,
+	ME_OPS,
+	ME_OP_OCCS,
+	ME_OP_COUNT
+}	t_metrics;
 
 // Structure for a stack
 typedef struct	s_stack
@@ -26,12 +39,16 @@ typedef struct	s_push_swap
 {
 	t_stack			*a;
 	t_stack			*b;
+	int				size;
 	int				*sorted;
 	int				*cmp;
 	t_operations	ops;
 }	t_push_swap;
 
 // Push_swap functions
+void	init_push_swap(t_push_swap *ps, int *stack, int size);
+void	free_push_swap(t_push_swap *ps);
+void	update_cmp(t_push_swap *ps);
 void	print_ps(t_push_swap *ps);
 
 // Stack functions
@@ -63,5 +80,14 @@ void	rr(t_push_swap *ps);
 void	rra(t_push_swap *ps);
 void	rrb(t_push_swap *ps);
 void	rrr(t_push_swap *ps);
+
+// Int tab utils functions
+void	rev_int_tab(int *tab, int size);
+int		*cmp_int_tab(int *tab1, int *tab2, int size);
+void	ft_qsort_int(int **tab, int size);
+void	print_int_tab(int *tab, int size);
+
+// Metrics functions
+void	breakpoint(t_push_swap *ps, ...);
 
 #endif

@@ -1,5 +1,6 @@
 #include "push_swap.h"
 
+// Creates a stack with the given size
 t_stack	*create_stack(int size)
 {
 	t_stack	*stack;
@@ -18,6 +19,7 @@ t_stack	*create_stack(int size)
 	return (stack);
 }
 
+// Frees the memory allocated for the stack
 void	free_stack(t_stack *stack)
 {
 	if (stack)
@@ -28,12 +30,14 @@ void	free_stack(t_stack *stack)
 	}
 }
 
+// Pushes an element onto the stack
 void	push(t_stack *stack, int nb)
 {
 	if (stack->top < stack->size)
 		stack->data[++stack->top] = nb;
 }
 
+// Pops an element from the stack
 int		pop(t_stack *stack)
 {
 	if (stack->top == -1)
@@ -41,6 +45,7 @@ int		pop(t_stack *stack)
 	return (stack->data[stack->top--]);
 }
 
+// Fills the stack with the given data
 void	flood_stack(t_stack *stack, int *data, int size)
 {
 	int	i;
@@ -53,6 +58,7 @@ void	flood_stack(t_stack *stack, int *data, int size)
 	}
 }
 
+// Prints the elements of the stack
 void	print_stack(t_stack *stack)
 {
 	int	i;
