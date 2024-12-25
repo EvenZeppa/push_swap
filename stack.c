@@ -1,48 +1,34 @@
 #include "push_swap.h"
 
-// Creates a stack with the given size
-t_stack	*create_stack(int size)
+// Creates a stack
+t_stack	*create_stack()
 {
 	t_stack	*stack;
 
 	stack = malloc(sizeof(t_stack));
 	if (!stack)
 		return (NULL);
-	stack->data = malloc(sizeof(int) * size);
-	if (!stack->data)
-	{
-		free(stack);
-		return (NULL);
-	}
-	stack->top = -1;
-	stack->size = size;
+	stack->top = NULL;
+	stack->min = NULL;
+	stack->max = NULL;
+	stack->size = 0;
 	return (stack);
 }
 
-// Frees the memory allocated for the stack
+// Frees the memory allocated for the stack and its elements
 void	free_stack(t_stack *stack)
 {
-	if (stack)
+	t_elem	*elem;
+	t_elem	*next;
+
+	elem = stack->top;
+	while (elem)
 	{
-		if (stack->data)
-			free(stack->data);
-		free(stack);
+		next = elem->next;
+		free_elem(elem);
+		elem = next;
 	}
-}
-
-// Pushes an element onto the stack
-void	push(t_stack *stack, int nb)
-{
-	if (stack->top < stack->size)
-		stack->data[++stack->top] = nb;
-}
-
-// Pops an element from the stack
-int		pop(t_stack *stack)
-{
-	if (stack->top == -1)
-		return (-1);
-	return (stack->data[stack->top--]);
+	free(stack);
 }
 
 // Fills the stack with the given data
@@ -53,20 +39,73 @@ void	flood_stack(t_stack *stack, int *data, int size)
 	i = 0;
 	while (i < size)
 	{
-		push(stack, data[i]);
+		push(stack, create_elem(data[i]));
 		i++;
 	}
 }
 
-// Prints the elements of the stack
-void	print_stack(t_stack *stack)
+// Pops an element from the stack
+t_elem	*pop(t_stack *stack)
 {
-	int	i;
+	t_elem	*elem;
 
-	i = stack->top;
-	while (i >= 0)
+	if (!stack->top)
+		return (NULL);
+	elem = stack->top;
+	stack->top = elem->prev;
+	unlink_elem(elem);
+
+	stack->size--;
+	return (elem);
+}
+
+// Pushes an element onto the stack
+void	push(t_stack *stack, t_elem *elem)
+{
+	if (!stack || !elem)
+		return ;
+	if (!stack->top)
+		stack->top = elem;
+	else
 	{
-		ft_printf("%d\n", stack->data[i]);
-		i--;
+		link_elem(stack->top, elem);
+		stack->top = elem;
 	}
+
+	if (!stack->min || elem->value < stack->min->value)
+		stack->min = elem;
+	if (!stack->max || elem->value > stack->max->value)
+		stack->max = elem;
+
+	stack->size++;
+}
+
+// Swaps the top two elements of the stack
+void	swap(t_stack *stack)
+{
+	t_elem	*elem1;
+	t_elem	*elem2;
+
+	if (!stack->top || !stack->top->prev)
+		return ;
+	elem1 = pop(stack);
+	elem2 = pop(stack);
+	push(stack, elem1);
+	push(stack, elem2);
+}
+
+// Rotates the stack
+void	rotate(t_stack *stack)
+{
+	if (!stack->top || !stack->top->prev)
+		return ;
+	stack->top = stack->top->prev;
+}
+
+// Reverses the rotation of the stack
+void	reverse_rotate(t_stack *stack)
+{
+	if (!stack->top || !stack->top->next)
+		return ;
+	stack->top = stack->top->next;
 }

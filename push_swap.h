@@ -2,80 +2,76 @@
 # define PUSH_SWAP_H
 
 # include <stdlib.h>
-# include <stdio.h>
-# include <limits.h>
 # include <stdarg.h>
-# include <time.h>
+# include <stdio.h>
 # include "libft.h"
 
-typedef enum e_metrics
+typedef enum e_operation
+{
+	OP_SA,
+	OP_SB,
+	OP_SS,
+	OP_PA,
+	OP_PB,
+	OP_RA,
+	OP_RB,
+	OP_RR,
+	OP_RRA,
+	OP_RRB,
+	OP_RRR
+}	t_operation;
+
+typedef enum e_metric
 {
 	ME_END,
 	ME_PS,
-	ME_SORTED,
-	ME_CMP,
 	ME_OPS,
-	ME_OP_OCCS,
-	ME_OP_COUNT
-}	t_metrics;
+	ME_OP_COUNT,
+	ME_OP_OCCS
+}	t_metric;
 
-typedef enum e_to_stack
+typedef struct s_elem
 {
-	TO_A,
-	TO_B
-}	t_to_stack;
+	int				value;
+	struct s_elem	*prev;
+	struct s_elem	*next;
+}	t_elem;
 
-// Structure for a stack
-typedef struct	s_stack
+typedef struct s_stack
 {
-	int	*data;
-	int	top;
+	t_elem	*top;
+	t_elem	*min;
+	t_elem	*max;
 	int	size;
 }	t_stack;
 
-// Structure for operations
-typedef struct	s_operations
+typedef struct s_push_swap
 {
-	char	**ops;
-	int		count;
-	int		capacity;
-}	t_operations;
+	t_stack	*a;
+	t_stack	*b;
 
-// Structure for push_swap
-typedef struct	s_push_swap
-{
-	t_stack			*a;
-	t_stack			*b;
-	int				size;
-	int				*sorted;
-	int				*cmp;
-	t_operations	ops;
+	int		*ops;
+	int		op_count;
+	int		op_capacity;
 }	t_push_swap;
 
-// Push_swap functions
-void	init_push_swap(t_push_swap *ps, int *stack, int size);
-void	free_push_swap(t_push_swap *ps);
-void	update_cmp(t_push_swap *ps);
-void	print_ps(t_push_swap *ps);
+// Elem Functions
+t_elem	*create_elem(int value);
+void	free_elem(t_elem *elem);
+void	link_elem(t_elem *elem1, t_elem *elem2);
+void	unlink_elem(t_elem *elem);
 
-// Stack functions
-t_stack	*create_stack(int size);
+// Stack Functions
+t_stack	*create_stack();
 void	free_stack(t_stack *stack);
-void	push(t_stack *stack, int nb);
-int		pop(t_stack *stack);
 void	flood_stack(t_stack *stack, int *data, int size);
-void	print_stack(t_stack *stack);
+t_elem	*pop(t_stack *stack);
+void	push(t_stack *stack, t_elem *elem);
+void	swap(t_stack *stack);
+void	rotate(t_stack *stack);
+void	reverse_rotate(t_stack *stack);
 
-// Operations functions
-void	init_operations(t_operations *ops);
-void	add_operation(t_operations *ops, char *op);
-void	pop_operation(t_operations *ops);
-void	free_operations(t_operations *ops);
-void	print_operations(t_operations *ops);
-void	print_operation_recurence(t_operations *ops);
-
-
-// Stack operations
+// Operations Functions
 void	sa(t_push_swap *ps);
 void	sb(t_push_swap *ps);
 void	ss(t_push_swap *ps);
@@ -88,20 +84,8 @@ void	rra(t_push_swap *ps);
 void	rrb(t_push_swap *ps);
 void	rrr(t_push_swap *ps);
 
-// Int tab utils functions
-void	rev_int_tab(int *tab, int size);
-int		*cmp_int_tab(int *tab1, int *tab2, int size);
-void	ft_qsort_int(int **tab, int size);
-void	print_int_tab(int *tab, int size);
-int		is_int_tab_zero(int *tab, int size);
-
-// Metrics functions
+// Metrics Functions
+void	print_ps(t_push_swap *ps);
 void	breakpoint(t_push_swap *ps, ...);
-
-// Solver functions
-// void	qsort_ps_sup(t_push_swap *ps, t_to_stack to_stack, int pivot, int in_stack_size);
-// void	qsort_ps_inf(t_push_swap *ps, t_to_stack to_stack, int pivot, int in_stack_size);	
-void	qsort_ps_a(t_push_swap *ps, int pivot);
-void	qsort_ps_b(t_push_swap *ps, int pivot);
 
 #endif
