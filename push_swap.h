@@ -5,6 +5,7 @@
 # include <stdio.h>
 # include <limits.h>
 # include <stdarg.h>
+# include <time.h>
 # include "libft.h"
 
 typedef enum e_metrics
