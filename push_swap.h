@@ -4,6 +4,7 @@
 # include <stdlib.h>
 # include <stdarg.h>
 # include <stdio.h>
+# include <time.h>
 # include "libft.h"
 
 typedef enum e_operation
@@ -20,6 +21,9 @@ typedef enum e_operation
 	OP_RRB,
 	OP_RRR
 }	t_operation;
+
+// Macro t_operation to string
+# define OP_STR(op) (char*[]){"sa", "sb", "ss", "pa", "pb", "ra", "rb", "rr", "rra", "rrb", "rrr"}[op]
 
 typedef enum e_metric
 {
@@ -70,8 +74,23 @@ void	push(t_stack *stack, t_elem *elem);
 void	swap(t_stack *stack);
 void	rotate(t_stack *stack);
 void	reverse_rotate(t_stack *stack);
+t_elem	*find_min_elem(t_stack *stack);
+t_elem	*find_max_elem(t_stack *stack);
+t_elem	*find_prev_elem(t_stack *stack, int value);
+t_elem	*find_next_elem(t_stack *stack, int value);
+t_elem	*find_prev_by_index(t_stack *stack, int index);
+t_elem	*find_next_by_index(t_stack *stack, int index);
+int 	itterate_prev_to_elem(t_stack *stack, t_elem *elem);
+int 	itterate_next_to_elem(t_stack *stack, t_elem *elem);
+// int		min_stack_cmp(t_stack *stack, int value);
+// int		max_stack_cmp(t_stack *stack, int value);
+// int		iterate_to_prev_cmp(t_stack *stack, int (*cmp)(t_stack*, int));
+// int		iterate_to_next_cmp(t_stack *stack, int (*cmp)(t_stack*, int));
+// t_elem	*get_by_cmp(t_stack *stack, int (*cmp)(t_stack*, int));
 
 // Operations Functions
+void	add_op(t_push_swap *ps, t_operation op);
+void	pop_op(t_push_swap *ps);
 void	sa(t_push_swap *ps);
 void	sb(t_push_swap *ps);
 void	ss(t_push_swap *ps);
@@ -86,6 +105,7 @@ void	rrr(t_push_swap *ps);
 
 // Metrics Functions
 void	print_ps(t_push_swap *ps);
+void	print_ops(t_push_swap *ps);
 void	breakpoint(t_push_swap *ps, ...);
 
 #endif

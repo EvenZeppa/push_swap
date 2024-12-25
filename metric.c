@@ -1,5 +1,6 @@
 #include "push_swap.h"
 
+// Prints the operations
 void	print_operations(int *ops, int count)
 {
 	int	i;
@@ -7,48 +8,38 @@ void	print_operations(int *ops, int count)
 	i = 0;
 	while (i < count)
 	{
-		switch (ops[i])
-		{
-			case OP_SA:
-				ft_printf("sa\n");
-				break;
-			case OP_SB:
-				ft_printf("sb\n");
-				break;
-			case OP_SS:
-				ft_printf("ss\n");
-				break;
-			case OP_PA:
-				ft_printf("pa\n");
-				break;
-			case OP_PB:
-				ft_printf("pb\n");
-				break;
-			case OP_RA:
-				ft_printf("ra\n");
-				break;
-			case OP_RB:
-				ft_printf("rb\n");
-				break;
-			case OP_RR:
-				ft_printf("rr\n");
-				break;
-			case OP_RRA:
-				ft_printf("rra\n");
-				break;
-			case OP_RRB:
-				ft_printf("rrb\n");
-				break;
-			case OP_RRR:
-				ft_printf("rrr\n");
-				break;
-			default:
-				break;
-		}
+		ft_printf("%s\n", OP_STR(ops[i]));
 		i++;
 	}
 }
 
+// Prints the operation occurences
+void print_operation_occurences(int *ops, int op_count)
+{
+	int	i;
+	int	occurences[11] = {0};
+
+	i = 0;
+	while (i < op_count)
+	{
+		occurences[ops[i]]++;
+		i++;
+	}
+	ft_printf(
+		"--------------------------------------\n"
+		"|     Operation Occurences           |\n"
+		"--------------------------------------\n"
+	);
+	i = 0;
+	while (i < 11)
+	{
+		ft_printf("|   %-13s -> %-13d   |\n", OP_STR(i), occurences[i]);
+		i++;
+	}
+	ft_printf("--------------------------------------\n");
+}
+
+// Prints the stacks
 void	print_ps(t_push_swap *ps)
 {
 	int	i;
@@ -103,11 +94,11 @@ void	breakpoint(t_push_swap *ps, ...)
 			case ME_OPS:
 				print_operations(ps->ops, ps->op_count);
 				break;
-			// case ME_OP_OCCS:
-			// 	print_operation_recurence(&ps->ops);
-			// 	break;
-			// case ME_OP_COUNT:
-			// 	ft_printf("Operation count: %d\n", ps->ops.count);
+			case ME_OP_OCCS:
+				print_operation_occurences(ps->ops, ps->op_count);
+				break;
+			case ME_OP_COUNT:
+				ft_printf("Operation count: %d\n", ps->op_count);
 				break;
 			default:
 				break;
