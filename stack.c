@@ -181,12 +181,14 @@ t_elem	*find_next_elem(t_stack *stack, int value)
 	if (!stack->top)
 		return (NULL);
 	elem = stack->top;
-	next = elem;
+	next = NULL;
 	while (elem)
 	{
-		if (next->value > elem->value && elem->value > value)
+		if ((!next && elem->value > value) || (next && next->value > elem->value && elem->value > value))
 			next = elem;
 		elem = elem->prev;
+		if (next && next->value == elem->value)
+			break ;
 	}
 	return (next);
 }
