@@ -105,7 +105,7 @@ void	rrr(t_push_swap *ps);
 
 // Metrics Functions
 void	print_ps(t_push_swap *ps);
-void	print_ops(t_push_swap *ps);
+void	print_operations(int *ops, int count);
 void	breakpoint(t_push_swap *ps, ...);
 
 #endif

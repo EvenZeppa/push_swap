@@ -309,11 +309,11 @@ int	handle_stdin(t_stack **lstack_a, t_stack **lstack_b)
 		if (!check)
 		{
 			if (!get_size_lstack(*lstack_b) && is_lstack_sorted(*lstack_a))
-				return (ft_printf("OK"), 1);
-			return (ft_printf("KO"), 1);
+				return (ft_printf("OK\n"), 1);
+			return (ft_printf("KO\n"), 1);
 		}
 		do_instructions(lstack_a, lstack_b, buffer);
-		print_lstacks(*lstack_a, *lstack_b);
+		// print_lstacks(*lstack_a, *lstack_b);
 	}
 }
 
@@ -366,7 +366,7 @@ int	main(int argc, char *argv[])
 	init_lstack(&lstack_a, &argv[1], argc - 1);
 	if (has_lstack_duplicate_nb(lstack_a))
 		return (ft_printf("Error\n") -1);
-	print_lstacks(lstack_a, lstack_b);
+	// print_lstacks(lstack_a, lstack_b);
 	handle_stdin(&lstack_a, &lstack_b);
 
 	free_lstack(&lstack_a);
