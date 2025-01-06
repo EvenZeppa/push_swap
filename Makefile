@@ -1,7 +1,7 @@
 CC = gcc
 C_FLAGS = -Wall -Wextra -Werror
 INCLUDES = -Iinclude
-PUSH_SWAP_SRCS = main.c elem.c stack.c metric.c operation.c
+PUSH_SWAP_SRCS = main.c elem.c stack.c stack1.c stack2.c metric.c operation.c operation1.c operation2.c move.c solver.c int_tab.c
 PUSH_SWAP_TARGET = push_swap
 CHECKER_SRCS = checker/checker.c checker/get_next_line.c checker/get_next_line_utils.c
 CHECKER_TARGET = checker1

@@ -60,6 +60,16 @@ typedef struct s_push_swap
 	int		op_capacity;
 }	t_push_swap;
 
+typedef struct s_move
+{
+	int	ra;
+	int	rra;
+	int	rb;
+	int	rrb;
+
+	int	count;
+}	t_move;
+
 // Elem Functions
 t_elem	*create_elem(int value);
 void	free_elem(t_elem *elem);
@@ -67,7 +77,7 @@ void	link_elem(t_elem *elem1, t_elem *elem2);
 void	unlink_elem(t_elem *elem);
 
 // Stack Functions
-t_stack	*create_stack();
+t_stack	*create_stack(void);
 void	free_stack(t_stack *stack);
 void	flood_stack(t_stack *stack, int *data, int size);
 t_elem	*pop(t_stack *stack);
@@ -77,17 +87,9 @@ void	rotate(t_stack *stack);
 void	reverse_rotate(t_stack *stack);
 t_elem	*find_min_elem(t_stack *stack);
 t_elem	*find_max_elem(t_stack *stack);
-t_elem	*find_prev_elem(t_stack *stack, int value);
 t_elem	*find_next_elem(t_stack *stack, int value);
-t_elem	*find_prev_by_index(t_stack *stack, int index);
-t_elem	*find_next_by_index(t_stack *stack, int index);
 int 	itterate_prev_to_elem(t_stack *stack, t_elem *elem);
 int 	itterate_next_to_elem(t_stack *stack, t_elem *elem);
-// int		min_stack_cmp(t_stack *stack, int value);
-// int		max_stack_cmp(t_stack *stack, int value);
-// int		iterate_to_prev_cmp(t_stack *stack, int (*cmp)(t_stack*, int));
-// int		iterate_to_next_cmp(t_stack *stack, int (*cmp)(t_stack*, int));
-// t_elem	*get_by_cmp(t_stack *stack, int (*cmp)(t_stack*, int));
 
 // Operations Functions
 void	add_op(t_push_swap *ps, t_operation op);
@@ -108,5 +110,19 @@ void	rrr(t_push_swap *ps);
 void	print_ps(t_push_swap *ps);
 void	print_operations(int *ops, int count);
 void	breakpoint(t_push_swap *ps, ...);
+
+int	ft_is_int(char *str);
+int	int_tab_min_index(int *tab, int size);
+int	int_tab_next_index(int *tab, int size, int value);
+int	int_tab_count_value(int *tab, int size, int value);
+
+void	do_move_r(t_push_swap *ps, t_move *bm);
+void	do_move_rr(t_push_swap *ps, t_move *bm);
+void	move_elem_r(t_push_swap *ps, t_elem *elem, t_move *move);
+void	move_elem_rr(t_push_swap *ps, t_elem *elem, t_move *move);
+
+void	ps_qsort(t_push_swap *ps);
+void	ps_turkish_sort(t_push_swap *ps);
+void	solve(t_push_swap *ps);
 
 #endif

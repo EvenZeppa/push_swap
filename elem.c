@@ -39,7 +39,6 @@ void	link_elem(t_elem *elem1, t_elem *elem2)
 	}
 	elem2->prev = elem1;
 	elem2->next = elem1->next;
-
 	elem1->next->prev = elem2;
 	elem1->next = elem2;
 }
@@ -54,7 +53,7 @@ void	unlink_elem(t_elem *elem)
 			elem->prev->next = NULL;
 			elem->prev->prev = NULL;
 		}
-		else 
+		else
 		{
 			if (elem->prev)
 				elem->prev->next = elem->next;

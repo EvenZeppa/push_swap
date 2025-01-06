@@ -14,11 +14,12 @@ void	print_operations(int *ops, int count)
 }
 
 // Prints the operation occurences
-void print_operation_occurences(int *ops, int op_count)
+void	print_operation_occurences(int *ops, int op_count)
 {
 	int	i;
-	int	occurences[11] = {0};
+	int	occurences[11];
 
+	ft_bzero(occurences, sizeof(occurences));
 	i = 0;
 	while (i < op_count)
 	{
@@ -29,7 +30,7 @@ void print_operation_occurences(int *ops, int op_count)
 		"--------------------------------------\n"
 		"|     Operation Occurences           |\n"
 		"--------------------------------------\n"
-	);
+		);
 	i = 0;
 	while (i < 11)
 	{
@@ -39,20 +40,10 @@ void print_operation_occurences(int *ops, int op_count)
 	ft_printf("--------------------------------------\n");
 }
 
-// Prints the stacks
-void	print_ps(t_push_swap *ps)
+void	print_line_ps(t_push_swap *ps, int i)
 {
-	int	i;
 	t_elem	*elem_a;
 	t_elem	*elem_b;
-
-	i = (ps->a->size > ps->b->size) ? ps->a->size : ps->b->size;
-
-	ft_printf(
-		"--------------------------------------\n"
-		"|     Stack A     ||     Stack B     |\n"
-		"--------------------------------------\n"
-	);
 
 	elem_a = ps->a->top;
 	elem_b = ps->b->top;
@@ -74,7 +65,23 @@ void	print_ps(t_push_swap *ps)
 			ft_printf("|                 |\n");
 		i--;
 	}
+}
 
+// Prints the stacks
+void	print_ps(t_push_swap *ps)
+{
+	int		i;
+
+	if (ps->a->size > ps->b->size)
+		i = ps->a->size;
+	else
+		i = ps->b->size;
+	ft_printf(
+		"--------------------------------------\n"
+		"|     Stack A     ||     Stack B     |\n"
+		"--------------------------------------\n"
+		);
+	print_line_ps(ps, i);
 	ft_printf("--------------------------------------\n");
 }
 
@@ -82,30 +89,25 @@ void	breakpoint(t_push_swap *ps, ...)
 {
 	va_list	args;
 	int		metric;
+	char	buf[1];
 
 	va_start(args, ps);
-	while ((metric = va_arg(args, int)))
+	metric = va_arg(args, int);
+	while (metric != ME_END)
 	{
-		switch (metric)
-		{
-			case ME_PS:
-				print_ps(ps);
-				break;
-			case ME_OPS:
-				print_operations(ps->ops, ps->op_count);
-				break;
-			case ME_OP_OCCS:
-				print_operation_occurences(ps->ops, ps->op_count);
-				break;
-			case ME_OP_COUNT:
-				ft_printf("Operation count: %d\n", ps->op_count);
-				break;
-			default:
-				break;
-		}
+		if (metric == ME_PS)
+			print_ps(ps);
+		else if (metric == ME_OPS)
+			print_operations(ps->ops, ps->op_count);
+		else if (metric == ME_OP_OCCS)
+			print_operation_occurences(ps->ops, ps->op_count);
+		else if (metric == ME_OP_COUNT)
+			ft_printf("Operation count: %d\n", ps->op_count);
+		else
+			break ;
+		metric = va_arg(args, int);
 	}
 	va_end(args);
-	// Wait until the user presses a key
 	ft_printf("Press any key to continue...\n");
-	getchar();
+	read(STDIN_FILENO, buf, 1);
 }
