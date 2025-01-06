@@ -5,6 +5,7 @@
 # include <stdarg.h>
 # include <stdio.h>
 # include <time.h>
+# include <limits.h>
 # include "libft.h"
 
 typedef enum e_operation

@@ -199,56 +199,157 @@ int	*generate_random_array(int size)
 	return (array);
 }
 
-int	main()
+int	ft_is_int(char *str)
 {
-	// int min_ops = -1;
-	// int max_ops = -1;
+	long long	result;
+	int			sign;
 
-	while (TRUE)
+	sign = 1;
+	result = 0;
+	if (*str == '+' || *str == '-')
 	{
-		t_push_swap	*ps;
+		if (*str == '-')
+			sign = -1;
+		str++;
+	}
+	while (*str)
+	{
+		if (!ft_isdigit(*str))
+			return (0);
+		result = result * 10 + (*str + '0');
+		if (result * sign < INT_MIN || result * sign > INT_MAX)
+			return (0);
+		str++;
+	}
+	return (1);
+}
 
-		int size = 1700;
-		int	*data = generate_random_array(size);
+t_push_swap	*init_ps()
+{
+	t_push_swap *ps;
 
-		ps = malloc(sizeof(t_push_swap));
-		if (!ps)
-			return (1);
-		ps->op_count = 0;
-		ps->op_capacity = 10;
-		ps->ops = malloc(ps->op_capacity * sizeof(int));
-
-		ps->a = create_stack();
-		ps->b = create_stack();
-		if (!ps->a || !ps->b)
-		{
-			free_stack(ps->a);
-			free_stack(ps->b);
-			free(ps);
-			return (1);
-		}
-		flood_stack(ps->a, data, size);
-			
-		solve(ps);
-
-		print_operations(ps->ops, ps->op_count);
-
-		// if (min_ops == -1 || ps->op_count < min_ops)
-		// 	min_ops = ps->op_count;
-		// if (max_ops == -1 || ps->op_count > max_ops)
-		// 	max_ops = ps->op_count;
-
-		// ft_printf("Operations: %d, Min: %d, Max: %d\n", ps->op_count, min_ops, max_ops);
-		// if (ps->op_count > 5000)
-		// 	exit(0);
-		breakpoint(ps, ME_OP_COUNT, ME_END);
-
+	ps = malloc(sizeof(t_push_swap));
+	if (!ps)
+		return (NULL);
+	ps->op_count = 0;
+	ps->op_capacity = 10;
+	ps->ops = malloc(ps->op_capacity * sizeof(int));
+	ps->a = create_stack();
+	ps->b = create_stack();
+	if (!ps->a || !ps->b)
+	{
 		free_stack(ps->a);
 		free_stack(ps->b);
-		free(ps->ops);
 		free(ps);
-		free(data);
-		break ;
+		return (NULL);
 	}
-	return (0);
+	return (ps);
 }
+
+int	*init_data(char *args[], int size)
+{
+	int	*data;
+	int	i;
+
+	data = malloc(sizeof(int) * size);
+	if (!data)
+		return (NULL);
+	i = 0;
+	while (i < size)
+	{
+		if (!ft_is_int(args[i]))
+			return (free(data), NULL);
+		data[i] = ft_atoi(args[i]);
+		i++;
+	}
+	return (data);
+}
+
+int	*formatted_data(int *data, int size)
+{
+	int	*formatted;
+	int	i;
+
+	formatted = malloc(sizeof(int) * size);
+	if (!formatted)
+		return (free(data), NULL);
+	i = 0;
+	while (i < size)
+	{
+		formatted[i] = data[i];
+		i++;
+	}
+	return (free(data), formatted);
+}
+
+int	main(int argc, char *argv[])
+{
+	t_push_swap	*ps;
+	int			*data;
+
+	if (argc == 1)
+		return (1);
+	ps = init_ps();
+	if (!ps)
+		return (ft_printf("Error\n"), 1);
+	data = init_data(&argv[1], argc - 1);
+	if (!data)
+		return (free(ps), ft_printf("Error\n"), 1);
+	data = formatted_data(data, argc - 1);
+	if (!data)
+		return (free(ps), ft_printf("Error\n"), 1);
+}
+
+// int	main()
+// {
+// 	int min_ops = -1;
+// 	int max_ops = -1;
+
+// 	while (TRUE)
+// 	{
+// 		t_push_swap	*ps;
+
+// 		int size = 500;
+// 		int	*data = generate_random_array(size);
+
+// 		ps = malloc(sizeof(t_push_swap));
+// 		if (!ps)
+// 			return (1);
+// 		ps->op_count = 0;
+// 		ps->op_capacity = 10;
+// 		ps->ops = malloc(ps->op_capacity * sizeof(int));
+
+// 		ps->a = create_stack();
+// 		ps->b = create_stack();
+// 		if (!ps->a || !ps->b)
+// 		{
+// 			free_stack(ps->a);
+// 			free_stack(ps->b);
+// 			free(ps);
+// 			return (1);
+// 		}
+// 		flood_stack(ps->a, data, size);
+			
+// 		solve(ps);
+
+// 		// print_operations(ps->ops, ps->op_count);
+
+// 		if (min_ops == -1 || ps->op_count < min_ops)
+// 			min_ops = ps->op_count;
+// 		if (max_ops == -1 || ps->op_count > max_ops)
+// 			max_ops = ps->op_count;
+
+// 		ft_printf("Operations: %d, Min: %d, Max: %d\n", ps->op_count, min_ops, max_ops);
+// 		if (ps->op_count > 5500)
+// 			exit(0);
+// 		// breakpoint(ps, ME_OP_COUNT, ME_END);
+
+// 		free_stack(ps->a);
+// 		free_stack(ps->b);
+// 		free(ps->ops);
+// 		free(ps);
+// 		free(data);
+// 		// break ;
+// 	}
+// 	return (0);
+// }
