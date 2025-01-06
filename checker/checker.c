@@ -65,7 +65,7 @@ t_stack	*get_last_lstack(t_stack *lstack)
 int	get_size_lstack(t_stack *lstack)
 {
 	t_stack	*current;
-	int	size;
+	int		size;
 
 	current = lstack;
 	size = 0;
@@ -80,7 +80,7 @@ int	get_size_lstack(t_stack *lstack)
 void	add_back_lstack(t_stack **lstack, t_stack *new)
 {
 	t_stack	*last;
-	
+
 	if (!new)
 		return ;
 	last = get_last_lstack(*lstack);
@@ -136,14 +136,14 @@ void	print_lstacks(t_stack *lstack_a, t_stack *lstack_b)
 {
 	t_stack	*current_a;
 	t_stack	*current_b;
-	int	size_a;
-	int	size_b;
+	int		size_a;
+	int		size_b;
 
 	ft_printf(
 		"--------------------------------------\n"
 		"|     Stack A     ||     Stack B     |\n"
 		"--------------------------------------\n"
-	);
+		);
 	current_a = lstack_a;
 	current_b = lstack_b;
 	size_a = get_size_lstack(lstack_a);
@@ -305,7 +305,7 @@ int	handle_stdin(t_stack **lstack_a, t_stack **lstack_b)
 		buffer = get_next_line(STDIN_FILENO);
 		check = check_buffer(buffer);
 		if (check == -1)
-			return (ft_printf("Error\n") -1);
+			return (ft_printf("Error\n"), -1);
 		if (!check)
 		{
 			if (!get_size_lstack(*lstack_b) && is_lstack_sorted(*lstack_a))
@@ -313,7 +313,6 @@ int	handle_stdin(t_stack **lstack_a, t_stack **lstack_b)
 			return (ft_printf("KO\n"), 1);
 		}
 		do_instructions(lstack_a, lstack_b, buffer);
-		// print_lstacks(*lstack_a, *lstack_b);
 	}
 }
 
@@ -362,13 +361,11 @@ int	main(int argc, char *argv[])
 	if (argc == 1)
 		return (0);
 	if (!check_args(argc - 1, &argv[1]))
-		return (ft_printf("Error\n") -1);
+		return (ft_printf("Error\n"), -1);
 	init_lstack(&lstack_a, &argv[1], argc - 1);
 	if (has_lstack_duplicate_nb(lstack_a))
-		return (ft_printf("Error\n") -1);
-	// print_lstacks(lstack_a, lstack_b);
+		return (ft_printf("Error\n"), -1);
 	handle_stdin(&lstack_a, &lstack_b);
-
 	free_lstack(&lstack_a);
 	free_lstack(&lstack_b);
 	return (0);
