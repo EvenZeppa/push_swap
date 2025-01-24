@@ -58,6 +58,7 @@ int *init_data(char *args[], int *size)
 	{
 		split_args = ft_split(args[0], ' ');
 		args = split_args;
+		(*size) = 0;
 		i = 0;
 		while (args[i])
 			i++;
@@ -70,7 +71,16 @@ int *init_data(char *args[], int *size)
 	while (i < (*size))
 	{
 		if (!ft_is_int(args[i]))
+		{
+			if (split_args)
+			{
+				i = 0;
+				while (split_args[i])
+					free(split_args[i++]);
+				free(split_args);
+			}
 			return (free(data), NULL);
+		}
 		data[i] = ft_atoi(args[i]);
 		i++;
 	}
@@ -105,6 +115,8 @@ int	*formatted_data(int *data, int size)
 		tmp = int_tab_next_index(data, size, data[tmp]);
 		if (tmp != -1)
 			formatted[tmp] = nb++;
+		if (tmp == -1)
+			tmp = i;
 		if (int_tab_count_value(data, size, data[tmp]) != 1)
 			return (free(data), free(formatted), NULL);
 		i++;
@@ -126,10 +138,10 @@ int	main(int argc, char *argv[])
 	size = argc - 1;
 	data = init_data(&argv[1], &size);
 	if (!data)
-		return (free(ps), ft_printf("Error\n"), 1);
+		return (free_stack(ps->a), free_stack(ps->b), free(ps), ft_printf("Error\n"), 1);
 	data = formatted_data(data, size);
 	if (!data)
-		return (free(ps), ft_printf("Error\n"), 1);
+		return (free_stack(ps->a), free_stack(ps->b), free(ps), ft_printf("Error\n"), 1);
 	flood_stack(ps->a, data, size);
 	solve(ps);
 	print_operations(ps->ops, ps->op_count);
