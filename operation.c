@@ -2,10 +2,10 @@
 
 void	add_op(t_push_swap *ps, t_operation op)
 {
-	if (!ps->ops || ps->op_count >= ps->op_capacity - 1)
+	if (!ps->ops || ps->op_count == ps->op_capacity)
 	{
 		ps->op_capacity *= 2;
-		ps->ops = (int *)ft_realloc(ps->ops, ps->op_capacity / 2, ps->op_capacity * sizeof(int));
+		ps->ops = (int *)ft_realloc(ps->ops, (ps->op_capacity / 2) * sizeof(int), ps->op_capacity * sizeof(int));
 	}
 	ps->ops[ps->op_count] = op;
 	ps->op_count++;

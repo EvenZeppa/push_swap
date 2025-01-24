@@ -20,4 +20,4 @@ clean:
 fclean: clean
 	make -C $(LIBFT_FOLDER) fclean
 
-re: clean all
+re: fclean all
