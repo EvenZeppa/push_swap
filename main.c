@@ -47,21 +47,39 @@ t_push_swap	*init_ps(void)
 	return (ps);
 }
 
-int	*init_data(char *args[], int size)
+int *init_data(char *args[], int *size)
 {
-	int	*data;
-	int	i;
+	int *data;
+	int i;
+	char **split_args;
 
-	data = malloc(sizeof(int) * size);
+	split_args = NULL;
+	if ((*size) == 1)
+	{
+		split_args = ft_split(args[0], ' ');
+		args = split_args;
+		i = 0;
+		while (args[i])
+			i++;
+		(*size) = i;
+	}
+	data = malloc(sizeof(int) * (*size));
 	if (!data)
 		return (NULL);
 	i = 0;
-	while (i < size)
+	while (i < (*size))
 	{
 		if (!ft_is_int(args[i]))
 			return (free(data), NULL);
 		data[i] = ft_atoi(args[i]);
 		i++;
+	}
+	if (split_args)
+	{
+		i = 0;
+		while (split_args[i])
+			free(split_args[i++]);
+		free(split_args);
 	}
 	return (data);
 }
@@ -96,19 +114,21 @@ int	main(int argc, char *argv[])
 {
 	t_push_swap	*ps;
 	int			*data;
+	int			size;
 
 	if (argc == 1)
 		return (1);
 	ps = init_ps();
 	if (!ps)
-		return (ft_printf("Error1\n"), 1);
-	data = init_data(&argv[1], argc - 1);
+		return (ft_printf("Error\n"), 1);
+	size = argc - 1;
+	data = init_data(&argv[1], &size);
 	if (!data)
-		return (free(ps), ft_printf("Error2\n"), 1);
-	data = formatted_data(data, argc - 1);
+		return (free(ps), ft_printf("Error\n"), 1);
+	data = formatted_data(data, size);
 	if (!data)
-		return (free(ps), ft_printf("Error3\n"), 1);
-	flood_stack(ps->a, data, argc - 1);
+		return (free(ps), ft_printf("Error\n"), 1);
+	flood_stack(ps->a, data, size);
 	solve(ps);
 	print_operations(ps->ops, ps->op_count);
 	free_stack(ps->a);

@@ -1,22 +1,23 @@
 CC = gcc
 C_FLAGS = -Wall -Wextra -Werror
-INCLUDES = -Iinclude
-PUSH_SWAP_SRCS = main.c elem.c stack.c stack1.c stack2.c metric.c operation.c operation1.c operation2.c move.c solver.c int_tab.c
-PUSH_SWAP_TARGET = push_swap
-CHECKER_SRCS = checker/checker.c checker/get_next_line.c checker/get_next_line_utils.c
-CHECKER_TARGET = checker1
+LIBFT_FOLDER = ft_lib
+LIBFT = $(LIBFT_FOLDER)/lib/libft.a
+SRCS = main.c elem.c stack.c stack1.c stack2.c metric.c operation.c operation1.c operation2.c move.c solver.c int_tab.c
+TARGET = push_swap
 
-all: $(PUSH_SWAP_TARGET)
+all: $(LIBFT) $(TARGET)
 
-$(PUSH_SWAP_TARGET):
-	$(CC) -g $(C_FLAGS) $(INCLUDES) $(PUSH_SWAP_SRCS) libft.a -o $(PUSH_SWAP_TARGET)
+$(LIBFT):
+	make -C $(LIBFT_FOLDER)
+
+$(TARGET):
+	$(CC) -g $(C_FLAGS) -I$(LIBFT_FOLDER)/include $(SRCS) $(LIBFT) -o $(TARGET)
 
 clean:
-	rm -f $(PUSH_SWAP_TARGET) $(CHECKER_TARGET)
+	make -C $(LIBFT_FOLDER) clean
+	rm -f $(TARGET)
+
+fclean: clean
+	make -C $(LIBFT_FOLDER) fclean
 
 re: clean all
-
-bonus: $(CHECKER_TARGET)
-
-$(CHECKER_TARGET):
-	$(CC) $(C_FLAGS) $(INCLUDES) $(CHECKER_SRCS) libft.a -o $(CHECKER_TARGET)
