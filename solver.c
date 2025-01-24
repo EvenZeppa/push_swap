@@ -54,8 +54,94 @@ void	ps_turkish_sort(t_push_swap *ps)
 	}
 }
 
+void	ps_sort_3(t_push_swap *ps)
+{
+	t_elem	*e;
+
+	e = ps->a->top;
+	if (e->value < e->prev->value
+		&& e->prev->prev->value > e->value
+		&& e->prev->value > e->prev->prev->value)
+	{
+		sa(ps);
+		ra(ps);
+	}
+	else if (e->value > e->prev->value
+		&& e->prev->prev->value < e->value
+		&& e->prev->value > e->prev->prev->value)
+	{
+		ra(ps);
+		sa(ps);
+	}
+	else if (e->value < e->prev->value
+		&& e->prev->prev->value < e->prev->value)
+		rra(ps);
+	else if (e->value > e->prev->prev->value
+		&& e->value > e->prev->value)
+		ra(ps);
+	else if (e->value > e->prev->value
+		&& e->value < e->prev->prev->value)
+		sa(ps);
+}
+
+void ps_sort_4(t_push_swap *ps)
+{
+	int	i;
+
+	i = 0;
+	while (i != 1)
+	{
+		if (ps->a->top->value == 1)
+		{
+			pb(ps);
+			i++;
+		}
+		else
+			ra(ps);
+	}
+	ps_sort_3(ps);
+	pa(ps);
+}
+
+void ps_sort_5(t_push_swap *ps)
+{
+	int	i;
+
+	i = 0;
+	while (i != 2)
+	{
+		if (ps->a->top->value == 1
+			|| ps->a->top->value == 2)
+		{
+			pb(ps);
+			i++;
+		}
+		else
+			ra(ps);
+	}
+	ps_sort_3(ps);
+	pa(ps);
+	pa(ps);
+	if (ps->a->top->value > ps->a->top->prev->value)
+		sa(ps);
+}
+
 void	solve(t_push_swap *ps)
 {
+	if (ps->a->size <= 5)
+	{
+		if (ps->a->size == 1)
+			return ;
+		if (ps->a->size == 2 && ps->a->top->value > ps->a->top->next->value)
+			sa(ps);
+		else if (ps->a->size == 3)
+			ps_sort_3(ps);
+		else if (ps->a->size == 4)
+			ps_sort_4(ps);
+		else if (ps->a->size == 5)
+			ps_sort_5(ps);
+		return ;
+	}
 	while (ps->a->size > 2)
 		ps_qsort(ps);
 	ps_turkish_sort(ps);

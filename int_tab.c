@@ -17,7 +17,7 @@ int	ft_is_int(char *str)
 	{
 		if (!ft_isdigit(*str))
 			return (0);
-		result = result * 10 + (*str + '0');
+		result = result * 10 + (*str - '0');
 		if (result * sign < INT_MIN || result * sign > INT_MAX)
 			return (0);
 		str++;
