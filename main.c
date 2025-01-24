@@ -34,7 +34,7 @@ t_push_swap	*init_ps(void)
 		return (NULL);
 	ps->op_count = 0;
 	ps->op_capacity = 10;
-	ps->ops = malloc(ps->op_capacity * sizeof(int));
+	ps->ops = NULL;
 	ps->a = create_stack();
 	ps->b = create_stack();
 	if (!ps->a || !ps->b)
@@ -91,6 +91,8 @@ int	*formatted_data(int *data, int size)
 	int	tmp;
 	int	i;
 
+	if (size == 0)
+		return (data);
 	formatted = malloc(sizeof(int) * size);
 	if (!formatted)
 		return (free(data), NULL);
