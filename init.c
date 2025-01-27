@@ -80,8 +80,10 @@ int	*init_data(char *args[], int *size)
 	split_args = NULL;
 	if (!prepare_args_and_size(args, size, &split_args))
 		return (NULL);
+	if (split_args)
+		args = split_args;
 	data = allocate_and_fill_data(args, *size);
-	if (!data && split_args)
+	if (split_args)
 	{
 		i = 0;
 		while (split_args[i])
