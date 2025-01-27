@@ -28,8 +28,9 @@ void	solve(t_push_swap *ps)
 			ps_sort_5(ps);
 		return ;
 	}
-	while (ps->a->size > 2)
-		ps_qsort(ps);
+	if (!stack_is_sorted(ps->a))
+		while (ps->a->size > 2)
+			ps_qsort(ps);
 	ps_turkish_sort(ps);
 	if (ps->a->top->value > ps->a->size / 2)
 		while (ps->a->top != ps->a->min)

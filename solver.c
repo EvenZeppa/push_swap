@@ -45,6 +45,8 @@ void	ps_turkish_sort(t_push_swap *ps)
 	t_move	tmp_m;
 	t_elem	*current;
 
+	if (stack_is_sorted(ps->a))
+		return ;
 	while (ps->b->size)
 	{
 		bm.count = -1;

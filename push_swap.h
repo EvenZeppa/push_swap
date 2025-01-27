@@ -103,6 +103,7 @@ t_elem		*find_max_elem(t_stack *stack);
 t_elem		*find_next_elem(t_stack *stack, int value);
 int			itterate_prev_to_elem(t_stack *stack, t_elem *elem);
 int			itterate_next_to_elem(t_stack *stack, t_elem *elem);
+int			stack_is_sorted(t_stack *stack);
 
 // Operations Functions
 void		add_op(t_push_swap *ps, t_operation op);

@@ -66,3 +66,20 @@ int	itterate_next_to_elem(t_stack *stack, t_elem *elem)
 	}
 	return (-1);
 }
+
+int	stack_is_sorted(t_stack *stack)
+{
+	t_elem	*curr;
+	int		i;
+
+	curr = find_min_elem(stack);
+	i = 0;
+	while (i < stack->size - 1)
+	{
+		if (curr->value > curr->prev->value)
+			return (0);
+		curr = curr->prev;
+		i++;
+	}
+	return (1);
+}
