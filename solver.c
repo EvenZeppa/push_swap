@@ -45,7 +45,7 @@ void	ps_turkish_sort(t_push_swap *ps)
 	t_move	tmp_m;
 	t_elem	*current;
 
-	if (stack_is_sorted(ps->a))
+	if (ps->b->size == 0 && stack_is_sorted(ps->a))
 		return ;
 	while (ps->b->size)
 	{
