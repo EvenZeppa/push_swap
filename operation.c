@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   operation.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezeppa <ezeppa@student.42.fr>              #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025-01-27 17:00:56 by ezeppa            #+#    #+#             */
+/*   Updated: 2025-01-27 17:00:56 by ezeppa           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	add_op(t_push_swap *ps, t_operation op)
@@ -5,7 +17,10 @@ void	add_op(t_push_swap *ps, t_operation op)
 	if (!ps->ops || ps->op_count == ps->op_capacity)
 	{
 		ps->op_capacity *= 2;
-		ps->ops = (int *)ft_realloc(ps->ops, (ps->op_capacity / 2) * sizeof(int), ps->op_capacity * sizeof(int));
+		ps->ops = (int *)ft_realloc(
+				ps->ops,
+				(ps->op_capacity / 2) * sizeof(int),
+				ps->op_capacity * sizeof(int));
 	}
 	ps->ops[ps->op_count] = op;
 	ps->op_count++;

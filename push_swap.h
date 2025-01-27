@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezeppa <ezeppa@student.42.fr>              #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025-01-27 16:43:42 by ezeppa            #+#    #+#             */
+/*   Updated: 2025-01-27 16:43:42 by ezeppa           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
@@ -24,7 +36,8 @@ typedef enum e_operation
 }	t_operation;
 
 // Macro t_operation to string
-# define OP_STR(op) (char*[]){"sa", "sb", "ss", "pa", "pb", "ra", "rb", "rr", "rra", "rrb", "rrr"}[op]
+# define OP_STR(op) (char*[])\
+	{"sa", "sb", "ss", "pa", "pb", "ra", "rb", "rr", "rra", "rrb", "rrr"}[op]
 
 typedef enum e_metric
 {
@@ -47,7 +60,7 @@ typedef struct s_stack
 	t_elem	*top;
 	t_elem	*min;
 	t_elem	*max;
-	int	size;
+	int		size;
 }	t_stack;
 
 typedef struct s_push_swap
@@ -71,58 +84,67 @@ typedef struct s_move
 }	t_move;
 
 // Elem Functions
-t_elem	*create_elem(int value);
-void	free_elem(t_elem *elem);
-void	link_elem(t_elem *elem1, t_elem *elem2);
-void	unlink_elem(t_elem *elem);
+t_elem		*create_elem(int value);
+void		free_elem(t_elem *elem);
+void		link_elem(t_elem *elem1, t_elem *elem2);
+void		unlink_elem(t_elem *elem);
 
 // Stack Functions
-t_stack	*create_stack(void);
-void	free_stack(t_stack *stack);
-void	flood_stack(t_stack *stack, int *data, int size);
-t_elem	*pop(t_stack *stack);
-void	push(t_stack *stack, t_elem *elem);
-void	swap(t_stack *stack);
-void	rotate(t_stack *stack);
-void	reverse_rotate(t_stack *stack);
-t_elem	*find_min_elem(t_stack *stack);
-t_elem	*find_max_elem(t_stack *stack);
-t_elem	*find_next_elem(t_stack *stack, int value);
-int 	itterate_prev_to_elem(t_stack *stack, t_elem *elem);
-int 	itterate_next_to_elem(t_stack *stack, t_elem *elem);
+t_stack		*create_stack(void);
+void		free_stack(t_stack *stack);
+void		flood_stack(t_stack *stack, int *data, int size);
+t_elem		*pop(t_stack *stack);
+void		push(t_stack *stack, t_elem *elem);
+void		swap(t_stack *stack);
+void		rotate(t_stack *stack);
+void		reverse_rotate(t_stack *stack);
+t_elem		*find_min_elem(t_stack *stack);
+t_elem		*find_max_elem(t_stack *stack);
+t_elem		*find_next_elem(t_stack *stack, int value);
+int			itterate_prev_to_elem(t_stack *stack, t_elem *elem);
+int			itterate_next_to_elem(t_stack *stack, t_elem *elem);
 
 // Operations Functions
-void	add_op(t_push_swap *ps, t_operation op);
-void	pop_op(t_push_swap *ps);
-void	sa(t_push_swap *ps);
-void	sb(t_push_swap *ps);
-void	ss(t_push_swap *ps);
-void	pa(t_push_swap *ps);
-void	pb(t_push_swap *ps);
-void	ra(t_push_swap *ps);
-void	rb(t_push_swap *ps);
-void	rr(t_push_swap *ps);
-void	rra(t_push_swap *ps);
-void	rrb(t_push_swap *ps);
-void	rrr(t_push_swap *ps);
+void		add_op(t_push_swap *ps, t_operation op);
+void		pop_op(t_push_swap *ps);
+void		sa(t_push_swap *ps);
+void		sb(t_push_swap *ps);
+void		ss(t_push_swap *ps);
+void		pa(t_push_swap *ps);
+void		pb(t_push_swap *ps);
+void		ra(t_push_swap *ps);
+void		rb(t_push_swap *ps);
+void		rr(t_push_swap *ps);
+void		rra(t_push_swap *ps);
+void		rrb(t_push_swap *ps);
+void		rrr(t_push_swap *ps);
 
 // Metrics Functions
-void	print_ps(t_push_swap *ps);
-void	print_operations(int *ops, int count);
-void	breakpoint(t_push_swap *ps, ...);
+void		print_ps(t_push_swap *ps);
+void		print_operations(int *ops, int count);
+void		breakpoint(t_push_swap *ps, ...);
 
-int	ft_is_int(char *str);
-int	int_tab_min_index(int *tab, int size);
-int	int_tab_next_index(int *tab, int size, int value);
-int	int_tab_count_value(int *tab, int size, int value);
+int			ft_is_int(char *str);
+int			int_tab_min_index(int *tab, int size);
+int			int_tab_next_index(int *tab, int size, int value);
+int			int_tab_count_value(int *tab, int size, int value);
 
-void	do_move_r(t_push_swap *ps, t_move *bm);
-void	do_move_rr(t_push_swap *ps, t_move *bm);
-void	move_elem_r(t_push_swap *ps, t_elem *elem, t_move *move);
-void	move_elem_rr(t_push_swap *ps, t_elem *elem, t_move *move);
+void		do_move_r(t_push_swap *ps, t_move *bm);
+void		do_move_rr(t_push_swap *ps, t_move *bm);
+void		move_elem_r(t_push_swap *ps, t_elem *elem, t_move *move);
+void		move_elem_rr(t_push_swap *ps, t_elem *elem, t_move *move);
 
-void	ps_qsort(t_push_swap *ps);
-void	ps_turkish_sort(t_push_swap *ps);
-void	solve(t_push_swap *ps);
+void		ps_qsort(t_push_swap *ps);
+void		ps_turkish_sort(t_push_swap *ps);
+void		ps_sort_3(t_push_swap *ps);
+void		ps_sort_4(t_push_swap *ps);
+void		ps_sort_5(t_push_swap *ps);
+void		solve(t_push_swap *ps);
+
+t_push_swap	*init_ps(void);
+int			prepare_args_and_size(char *args[], int *size, char ***split_args);
+int			*allocate_and_fill_data(char *args[], int size);
+int			*init_data(char *args[], int *size);
+int			*formatted_data(int *data, int size);
 
 #endif

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   solver.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezeppa <ezeppa@student.42.fr>              #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025-01-27 16:43:46 by ezeppa            #+#    #+#             */
+/*   Updated: 2025-01-27 16:43:46 by ezeppa           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	ps_qsort(t_push_swap *ps)
@@ -56,35 +68,32 @@ void	ps_turkish_sort(t_push_swap *ps)
 
 void	ps_sort_3(t_push_swap *ps)
 {
-	t_elem	*e;
-
-	e = ps->a->top;
-	if (e->value < e->prev->value
-		&& e->prev->prev->value > e->value
-		&& e->prev->value > e->prev->prev->value)
+	if (ps->a->top->value < ps->a->top->prev->value
+		&& ps->a->top->prev->prev->value > ps->a->top->value
+		&& ps->a->top->prev->value > ps->a->top->prev->prev->value)
 	{
 		sa(ps);
 		ra(ps);
 	}
-	else if (e->value > e->prev->value
-		&& e->prev->prev->value < e->value
-		&& e->prev->value > e->prev->prev->value)
+	else if (ps->a->top->value > ps->a->top->prev->value
+		&& ps->a->top->prev->prev->value < ps->a->top->value
+		&& ps->a->top->prev->value > ps->a->top->prev->prev->value)
 	{
 		ra(ps);
 		sa(ps);
 	}
-	else if (e->value < e->prev->value
-		&& e->prev->prev->value < e->prev->value)
+	else if (ps->a->top->value < ps->a->top->prev->value
+		&& ps->a->top->prev->prev->value < ps->a->top->prev->value)
 		rra(ps);
-	else if (e->value > e->prev->prev->value
-		&& e->value > e->prev->value)
+	else if (ps->a->top->value > ps->a->top->prev->prev->value
+		&& ps->a->top->value > ps->a->top->prev->value)
 		ra(ps);
-	else if (e->value > e->prev->value
-		&& e->value < e->prev->prev->value)
+	else if (ps->a->top->value > ps->a->top->prev->value
+		&& ps->a->top->value < ps->a->top->prev->prev->value)
 		sa(ps);
 }
 
-void ps_sort_4(t_push_swap *ps)
+void	ps_sort_4(t_push_swap *ps)
 {
 	int	i;
 
@@ -103,7 +112,7 @@ void ps_sort_4(t_push_swap *ps)
 	pa(ps);
 }
 
-void ps_sort_5(t_push_swap *ps)
+void	ps_sort_5(t_push_swap *ps)
 {
 	int	i;
 
@@ -124,31 +133,4 @@ void ps_sort_5(t_push_swap *ps)
 	pa(ps);
 	if (ps->a->top->value > ps->a->top->prev->value)
 		sa(ps);
-}
-
-void	solve(t_push_swap *ps)
-{
-	if (ps->a->size <= 5)
-	{
-		if (ps->a->size == 1)
-			return ;
-		if (ps->a->size == 2 && ps->a->top->value > ps->a->top->next->value)
-			sa(ps);
-		else if (ps->a->size == 3)
-			ps_sort_3(ps);
-		else if (ps->a->size == 4)
-			ps_sort_4(ps);
-		else if (ps->a->size == 5)
-			ps_sort_5(ps);
-		return ;
-	}
-	while (ps->a->size > 2)
-		ps_qsort(ps);
-	ps_turkish_sort(ps);
-	if (ps->a->top->value > ps->a->size / 2)
-		while (ps->a->top != ps->a->min)
-			ra(ps);
-	else
-		while (ps->a->top != ps->a->min)
-			rra(ps);
 }

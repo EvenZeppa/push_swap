@@ -19,13 +19,13 @@
 # include <unistd.h>
 
 // Character type functions
-int		ft_isalpha(int c);
-int		ft_isdigit(int c);
-int		ft_isalnum(int c);
-int		ft_isascii(int c);
-int		ft_isprint(int c);
-int		ft_toupper(int c);
-int		ft_tolower(int c);
+int			ft_isalpha(int c);
+int			ft_isdigit(int c);
+int			ft_isalnum(int c);
+int			ft_isascii(int c);
+int			ft_isprint(int c);
+int			ft_toupper(int c);
+int			ft_tolower(int c);
 
 // String functions
 size_t		ft_strlen(const char *s);
@@ -61,7 +61,7 @@ void		*ft_memmove(void *dest, const void *src, size_t n);
 void		*ft_memchr(const void *s, int c, size_t n);
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
 void		*ft_calloc(size_t nmemb, size_t size);
-void		*ft_realloc(void *ptr, size_t old_size, size_t new_size);
+void		*ft_realloc(void *ptr, size_t new_size);
 
 // Input/Output functions
 void		ft_putchar_fd(char c, int fd);
@@ -69,7 +69,7 @@ void		ft_putstr_fd(char *s, int fd);
 void		ft_putendl_fd(char *s, int fd);
 void		ft_putnbr_fd(int n, int fd);
 
-// Printf functions
+// Printf Defines
 // Boolean
 # define FALSE 0
 # define TRUE 1
@@ -81,6 +81,7 @@ void		ft_putnbr_fd(int n, int fd);
 # define FLAG_HASH '#'
 # define FLAG_ZERO '0'
 
+// Printf Structs
 typedef struct s_format
 {
 	int		flag_minus;
@@ -93,6 +94,7 @@ typedef struct s_format
 	char	specifier;
 }	t_format;
 
+// Printf Functions
 int			ft_printf(const char *format, ...);
 
 t_format	*init_format(const char **ptr);

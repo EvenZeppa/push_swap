@@ -2,7 +2,7 @@ CC = gcc
 C_FLAGS = -Wall -Wextra -Werror
 LIBFT_FOLDER = ft_lib
 LIBFT = $(LIBFT_FOLDER)/lib/libft.a
-SRCS = main.c elem.c stack.c stack1.c stack2.c metric.c operation.c operation1.c operation2.c move.c solver.c int_tab.c
+SRCS = main.c init.c elem.c stack.c stack1.c stack2.c metric.c operation.c operation1.c operation2.c move.c solver.c int_tab.c
 TARGET = push_swap
 
 all: $(LIBFT) $(TARGET)
